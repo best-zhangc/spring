@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd"
+               default-lazy-init = "true" default-init-method="init" default-destroy-method="destroy" >
+						
+			<!--1、使用构造器来实列化的方式的代码配置如下：  -->
+			 <bean id="calendarObj1" class="java.util.GregorianCalendar"></bean>
+			
+			<!--2、使用静态工厂方法实列化代码配置如下：-->
+			<bean id="calendarObj2" class="java.util.Calendar" factory-method="getInstance"></bean>  
+			
+			<!--3、使用实列工厂方法实列化的方式代码配置如下： -->
+			<bean id="calendarObj3" class="java.util.GregorianCalendar"></bean>
+			<bean id="dateObj" factory-bean="calendarObj3" factory-method="getTime"></bean> 
+			
+			<!--配置ExampleBean -->
+			<!-- <bean id="exampleBean" class="com.zc.bean.ExampleBean"></bean> -->
+			<!-- 设置创建Bean的模式原型模式  scope= "prototype" 输出为false-->
+			<!-- <bean id="exampleBean" class="com.zc.bean.ExampleBean"
+			 scope= "prototype" init-method="init" destroy-method="destroy	"></bean> -->
+			 <!--销毁ExampleBean对象 destroy-method="destroy" 仅对单列起作用 
+			 	在 prototype 下没有意义 使用 scope="singleton" 模式创建Bean对象 -->
+			 <bean id="exampleBean" class="com.zc.bean.ExampleBean"
+			 scope= "singleton" init-method="init" destroy-method="destroy" depends-on="bean1"></bean>
+			 <bean id="bean1" class="com.zc.bean.ExampleBean1" lazy-init ="true"></bean>
+</beans>
