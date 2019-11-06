@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd">
+                
+       <!--setter 注入  -->         
+       <bean id="dataSource" class="com.zc.dao.JDBCDataSource">
+	       	<property name="driver" value="com.mysql.jdbc.Driver"></property>
+	       	<property name="url" value="jdbc:mysql://localhost:3306/db_stu?useUnicode=true&amp;characterEncoding=utf-8"></property>
+	       	<property name="user" value="root"></property>
+	       	<property name="pwd" value="1234"></property>
+       </bean>
+       
+       <!--构造器注入  -->
+       <bean id="userDao" class="com.zc.user.dao.MysqlUserDao">
+       		<!--利用构造器的参数注入bean的属性  -->
+       		<constructor-arg index="0" ref="dataSource"></constructor-arg>
+       </bean>
+        
+        <!--按照类中自动注入属性  -->        
+        <bean id="userService" class="com.zc.user.service.UserService" autowire="byType"></bean>
+</beans>
