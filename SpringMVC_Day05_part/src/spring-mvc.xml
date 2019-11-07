@@ -40,7 +40,7 @@
        <!--控制器Bean配置  -->        
       <bean id="helloController" class="com.zc.controller.helloController"/>  
       
-      <!--定义视图解析器ViewResolver  -->        
+      <!--定义视图解析器ViewResolver -->        
       <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       		<property name="prefix" value="/WEB-INF/jsp/"/>
       		<property name="suffix" value=".jsp"/>
