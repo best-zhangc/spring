@@ -21,7 +21,7 @@
 			<!-- <bean id="exampleBean" class="com.zc.bean.ExampleBean"
 			 scope= "prototype" init-method="init" destroy-method="destroy	"></bean> -->
 			 <!--销毁ExampleBean对象 destroy-method="destroy" 仅对单列起作用 
-			 	在 prototype 下没有意义 使用 scope="singleton" 模式创建Bean对象 -->
+			 	在 prototype 下没有意义 使用 scope="singleton" 模式创建Bean对象  -->
 			 <bean id="exampleBean" class="com.zc.bean.ExampleBean"
 			 scope= "singleton" init-method="init" destroy-method="destroy" depends-on="bean1"></bean>
 			 <bean id="bean1" class="com.zc.bean.ExampleBean1" lazy-init ="true"></bean>
