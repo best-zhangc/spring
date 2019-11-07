@@ -18,6 +18,6 @@
        		<constructor-arg index="0" ref="dataSource"></constructor-arg>
        </bean>
         
-        <!--按照类中自动注入属性  -->        
+        <!--按照类中自动注入属性 -->        
         <bean id="userService" class="com.zc.user.service.UserService" autowire="byType"></bean>
 </beans>
