@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xmlns:context="http://www.springframework.org/schema/context"
+	 xmlns:util = "http://www.springframework.org/schema/util"
+	 xmlns:jee =" http://www.springframework.org/schema/jee"
+	 xmlns:tx ="http://www.springframework.org/schema/tx"
+	 xmlns:jdbc ="http://www.springframework.org/schema/jdbc"
+	 xmlns:jpa = "http://www.springframework.org/schema/data/jpa"
+	 xmlns:mvc="http://www.springframework.org/schema/mvc"
+	 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	        http://www.springframework.org/schema/beans/spring-beans.xsd
+	          						http://www.springframework.org/schema/context
+	        http://www.springframework.org/schema/context/spring-context.xsd
+	        						http://www.springframework.org/schema/util 
+	        http://www.springframework.org/schema/util/spring-util.xsd
+	        						http://www.springframework.org/schema/jee 
+	        http://www.springframework.org/schema/jee/spring-jee.xsd
+	         						http://www.springframework.org/schema/tx 
+	         http://www.springframework.org/schema/tx/spring-tx.xsd 
+	         						http://www.springframework.org/schema/jdbc 
+	         http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+	         						http://www.Springframework.org/schema/data/jpa
+	         http://www.Springframework.org/schema/data/jpa/spring-jpa.xsd
+	         						http://www.springframework.org/schema/mvc 
+	         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!--导入 db.properties 数据库配置文件  -->
+	<util:properties id="jdbcProps" location="classpath:db.properties"/>
+	
+	<!--容器实列化自动扫描 com.zc.user 下的包及其子包下所有组件类   -->
+	<context:component-scan base-package="com.zc.user"/>
+	<mvc:annotation-driven/>
+	
+
+	
+	<!--拦截器 -->
+	<mvc:interceptors>
+	
+	<!--测试拦截器afterCompletion 、postHandle 、preHandle三个方法执行时机  -->
+		<mvc:interceptor>
+			<mvc:mapping path="/spring/*"/>
+			<mvc:exclude-mapping path="/login/*"/>
+			<bean class="com.zc.user.interceptor.SomeInterceptor"></bean>
+		</mvc:interceptor>
+		
+		<!-- 登录检查 -->
+		<mvc:interceptor>
+		<!--拦截全部  -->
+			<mvc:mapping path="/**"/>
+			<!--不拦截 /login/* 下的  -->
+			<mvc:exclude-mapping path="/login/*"/>
+			<bean class="com.zc.user.interceptor.LoginInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors> 
+	
+	<!--视图处理  -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	<!--异常处理  方法一： 使用SimpleMappingExceptionResolver-->
+	<!--异常处理  方法三: 使用@ExceptionHandler  -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<!-- 定义异常处理页面获取页面信息变量  -->
+		<property name="exceptionAttribute" value="ex"></property>
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">error</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!--异常处理  方法二： 自定义异常处理器 MyMappingExceptionResolver 
+ 		 实现HandlerExceptionResolver接口  -->
+ 	<!-- <bean id="exceptionHandler" class="com.zc.user.exception.MyMappingExceptionResolver"/> -->
+</beans>
