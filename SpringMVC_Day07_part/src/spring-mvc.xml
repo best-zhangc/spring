@@ -39,5 +39,8 @@
 	<!--Spring 下CommonsMultipartResolver文件上传功能 , CommonsMultipartResolver类  
 		  是spring在apache common fileupload组件的基础上,进行了一层封装，使用更方便。-->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<!--限制上传文件大小  上传文件大于51200byte上传 报HTTP状态500-请求处理失败-->
+		<property name="maxUploadSize" value="51200"/>
+		<property name="resolveLazily" value="true"/>
 	</bean>
 </beans>
